@@ -68,7 +68,7 @@ pub struct Enforcer<A: Adapter> {
     pub eft: Box<dyn Effector>,
     pub rm: Box<dyn RoleManager>,
     pub auto_save: bool,
-    auto_build_role_links: bool,
+    pub auto_build_role_links: bool,
 }
 
 impl<A: Adapter> Enforcer<A> {

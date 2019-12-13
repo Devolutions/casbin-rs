@@ -93,7 +93,9 @@ impl<A: Adapter> MgmtApi for Enforcer<A> {
 
     fn add_named_grouping_policy(&mut self, ptype: &str, params: Vec<&str>) -> Result<bool> {
         let rule_added = self.add_policy_internal("g", ptype, params)?;
-        self.build_role_links()?;
+        if self.auto_build_role_links {
+            self.build_role_links()?;
+        }
         Ok(rule_added)
     }
 
