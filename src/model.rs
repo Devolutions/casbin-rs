@@ -60,23 +60,21 @@ impl Assertion {
         let count = self.value.chars().filter(|&c| c == '_').count();
         for (_k, rule) in self.policy.iter().enumerate() {
             if count < 2 {
-                return Err(CasbinError::new(
+                return Err(CasbinError::Error(
                     "the number of \"_\" in role definition should be at least 2",
-                )
-                .into());
+                ));
             }
             if rule.len() < count {
-                return Err(CasbinError::new(
+                return Err(CasbinError::Error(
                     "grouping policy elements do not meet role definition",
-                )
-                .into());
+                ));
             }
             if count == 2 {
                 rm.add_link(&rule[0], &rule[1], None);
             } else if count == 3 {
                 rm.add_link(&rule[0], &rule[1], Some(&rule[2]));
             } else if count >= 4 {
-                return Err(CasbinError::new("domain can at most contains 1 string").into());
+                return Err(CasbinError::Error("domain can at most contains 1 string"));
             }
         }
         self.rm = rm.clone();

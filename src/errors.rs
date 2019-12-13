@@ -1,21 +1,25 @@
-use std::error::Error;
 use std::fmt::{Display, Formatter, Result as FmtResult};
+use std::io;
 
-#[derive(Debug, Clone)]
-pub struct CasbinError {
-    msg: &'static str,
+#[derive(Debug)]
+pub enum CasbinError {
+    Io(io::Error),
+    Error(&'static str),
+    ParsingFailure(&'static str),
 }
 
-impl CasbinError {
-    pub fn new(msg: &'static str) -> Self {
-        CasbinError { msg }
+impl From<io::Error> for CasbinError {
+    fn from(error: io::Error) -> Self {
+        CasbinError::Io(error)
     }
 }
 
 impl Display for CasbinError {
     fn fmt(&self, f: &mut Formatter) -> FmtResult {
-        write!(f, "casbin error, msg={}", self.msg)
+        match *self {
+            CasbinError::Io(ref err) => write!(f, "Casbin error, IO error: {}", err),
+            CasbinError::Error(msg) => write!(f, "Casbin error: msg={}", msg),
+            CasbinError::ParsingFailure(msg) => write!(f, "Casbin error, Parsing failure: msg={}", msg),
+        }
     }
 }
-
-impl Error for CasbinError {}

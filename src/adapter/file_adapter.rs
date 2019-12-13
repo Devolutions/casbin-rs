@@ -45,7 +45,7 @@ impl Adapter for FileAdapter {
 
     fn save_policy(&self, m: &mut Model) -> Result<()> {
         if self.file_path == "" {
-            return Err(CasbinError::new("save policy failed, file path is empty").into());
+            return Err(CasbinError::Error("save policy failed, file path is empty"));
         }
 
         let mut tmp = String::new();

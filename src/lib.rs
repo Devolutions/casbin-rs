@@ -12,5 +12,6 @@ mod rbac_api;
 pub use internal_api::InternalApi;
 pub use management_api::MgmtApi;
 pub use rbac_api::RbacApi;
+pub use errors::CasbinError;
 
-pub type Result<T> = std::result::Result<T, Box<dyn std::error::Error + Send + Sync>>;
+pub type Result<T> = std::result::Result<T, CasbinError>;
