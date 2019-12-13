@@ -305,6 +305,11 @@ impl<A: Adapter> Enforcer<A> {
     pub fn enable_auto_build_role_links(&mut self, auto_build_role_links: bool) {
         self.auto_build_role_links = auto_build_role_links;
     }
+
+    pub fn save_policy(&mut self) -> Result<()> {
+        self.adapter.save_policy(&mut self.model)?;
+        Ok(())
+    }
 }
 
 #[cfg(test)]
