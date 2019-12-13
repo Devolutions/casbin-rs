@@ -10,3 +10,10 @@ edition = "2018"
 regex = "1"
 rhai = "0.7"
 ip_network = "0.3.4"
+
+[dev-dependencies]
+criterion = "0.3"
+
+[[bench]]
+name = "model_benchmark"
+harness = false
